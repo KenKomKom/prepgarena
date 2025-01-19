@@ -1,6 +1,7 @@
 """
 SCENE INI FUNGSINYA SEBAGAI DISPLAY GAMBAR ITEM YANG LAGI DIPEGANG SAMA MOUSE / YG TAMPIL
 DI INVENTORY
+Isinya ada resource yang isinya informasi item yg bersangkutan
 """
 
 extends Node2D
@@ -12,17 +13,20 @@ var item_id : int
 var item_grids :=[]
 var selected = false
 var grid_anchor = null
+var resource:ItemResource
 
 func _process(delta):
 	if selected:
 		global_position = lerp(global_position, get_global_mouse_position(), 25*delta)
 
-func load_item(a_id):
-	var icon_path = "res://assets/" + DataHandler.item_data[str(a_id)]['name'] + ".png"
-	var to_be_loaded = load(icon_path)
-	image.texture = to_be_loaded
+func load_item(new_resource: ItemResource):
+	resource = new_resource
+	image.texture = resource.image
 	image.custom_minimum_size = Vector2(45*image.texture.get_width()/500, 45*image.texture.get_height()/500)
-	for grid in DataHandler.item_grid_data[str(a_id)]:
+	var grids = []
+	for poin in new_resource.grids.split('/'):
+		grids.append(poin.split(','))
+	for grid in grids:
 		var convert_array:=[]
 		for i in grid:
 			convert_array.push_back(int(i))
@@ -51,3 +55,6 @@ func snap_to(dest: Vector2):
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self, "global_position", dest, 0.15)
 	selected = false
+
+func consume_item():
+	resource.consume()

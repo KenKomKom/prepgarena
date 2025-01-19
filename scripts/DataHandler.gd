@@ -1,3 +1,7 @@
+"""
+Ini autoload useless sekarang
+"""
+
 extends Node
 
 var item_data={}

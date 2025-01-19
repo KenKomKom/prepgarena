@@ -8,6 +8,7 @@ var health:=100
 @export var current_state: PlayerState
 
 func _ready():
+	GlobalEvent.connect("heal",_heal)
 	for child in $states.get_children():
 		child.connect("change_state",set_current_state)
 
@@ -15,6 +16,9 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("tab"):
 		GlobalEvent.emit_signal("tab_pressed")
 	current_state.do_something()
+
+func _heal(amount):
+	health = amount
 
 func take_damage(damage):
 	health-=damage

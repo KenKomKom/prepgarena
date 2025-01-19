@@ -5,8 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://cxjv5yawfxrmi" path="res://scenes/player_states/player_state_basic.tscn" id="3_th3k8"]
 [ext_resource type="PackedScene" uid="uid://bqgpfgr5nx66l" path="res://scenes/player_states/player_state_attack.tscn" id="4_4y846"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5g37y"]
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_3ogt2"]
 animations = [{
 "frames": [{
@@ -20,6 +18,9 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5g37y"]
+radius = 45.2769
 
 [sub_resource type="Animation" id="Animation_ve6d4"]
 length = 0.001
@@ -66,12 +67,13 @@ motion_mode = 1
 script = ExtResource("1_go5bx")
 current_state = NodePath("states/PlayerStateBasic")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_5g37y")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3ogt2")
 animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 65)
+shape = SubResource("CircleShape2D_5g37y")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
