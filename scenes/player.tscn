@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://y2cvwf7gsr5f"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_go5bx"]
+[ext_resource type="Texture2D" uid="uid://dy03hh172aqul" path="res://icon.svg" id="2_k2iq1"]
+[ext_resource type="PackedScene" uid="uid://cxjv5yawfxrmi" path="res://scenes/player_states/player_state_basic.tscn" id="3_th3k8"]
+[ext_resource type="PackedScene" uid="uid://bqgpfgr5nx66l" path="res://scenes/player_states/player_state_attack.tscn" id="4_4y846"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5g37y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ogt2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k2iq1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_k2iq1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_ve6d4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_vfeyi"]
+resource_name = "attack"
+
+[sub_resource type="Animation" id="Animation_8iylo"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yura8"]
+_data = {
+"RESET": SubResource("Animation_ve6d4"),
+"attack": SubResource("Animation_vfeyi"),
+"idle": SubResource("Animation_8iylo")
+}
+
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("current_state")]
+motion_mode = 1
+script = ExtResource("1_go5bx")
+current_state = NodePath("states/PlayerStateBasic")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5g37y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3ogt2")
+animation = &"idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yura8")
+}
+
+[node name="states" type="Node" parent="."]
+
+[node name="PlayerStateBasic" parent="states" node_paths=PackedStringArray("next_state") instance=ExtResource("3_th3k8")]
+next_state = [NodePath("../PlayerStateAttack")]
+
+[node name="PlayerStateAttack" parent="states" node_paths=PackedStringArray("next_state") instance=ExtResource("4_4y846")]
+next_state = [NodePath("../PlayerStateBasic")]

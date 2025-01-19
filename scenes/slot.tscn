@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi778l8dw3tf3"]
+
+[ext_resource type="Texture2D" uid="uid://c83t8yar5k5re" path="res://assets/gridtile.png" id="1_7q4n1"]
+[ext_resource type="Script" path="res://scripts/slot.gd" id="2_yumkh"]
+
+[node name="slot" type="TextureRect"]
+custom_minimum_size = Vector2(45, 45)
+anchors_preset = -1
+anchor_right = 0.039
+anchor_bottom = 0.069
+offset_right = 0.0719986
+offset_bottom = 0.287994
+texture = ExtResource("1_7q4n1")
+expand_mode = 1
+script = ExtResource("2_yumkh")
+
+[node name="status" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.403922, 1, 0.294118, 0.254902)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
