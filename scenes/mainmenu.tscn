@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfooewt7ccsrb"]
+[gd_scene load_steps=8 format=3 uid="uid://dfooewt7ccsrb"]
 
 [ext_resource type="Script" path="res://scripts/mainmenu.gd" id="1_6y6xi"]
 [ext_resource type="PackedScene" uid="uid://bvu8pvos8au61" path="res://scenes/buttonanimation.tscn" id="2_lxety"]
@@ -6,32 +6,40 @@
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_0lapd"]
 content_margin_left = 10.0
 color = Color(0.980392, 0.980392, 0.980392, 1)
-grow_begin = 5.0
-grow_end = 5.0
+grow_begin = 0.0
+grow_end = 0.0
 thickness = 3
 vertical = true
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_fo5um"]
 content_margin_left = 10.0
 color = Color(1, 1, 1, 1)
-grow_begin = 5.0
-grow_end = 5.0
+grow_begin = 0.0
+grow_end = 0.0
 thickness = 3
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_5rdvu"]
+content_margin_left = 10.0
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+thickness = 5
 vertical = true
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_bxpou"]
 content_margin_left = 10.0
 color = Color(1, 1, 1, 1)
-grow_begin = 5.0
-grow_end = 5.0
+grow_begin = 0.0
+grow_end = 0.0
 thickness = 3
 vertical = true
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_10shv"]
 content_margin_left = 10.0
 color = Color(1, 1, 1, 1)
-grow_begin = 5.0
-grow_end = 5.0
+grow_begin = 0.0
+grow_end = 0.0
 thickness = 3
 vertical = true
 
@@ -63,27 +71,45 @@ theme_override_constants/separation = 20
 [node name="start" type="Button" parent="VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxLine_0lapd")
 theme_override_styles/hover = SubResource("StyleBoxLine_fo5um")
+theme_override_styles/pressed = SubResource("StyleBoxLine_5rdvu")
 text = "Start Game"
 alignment = 0
 
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/VBoxContainer/start"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.129412, 0.27451, 1)
+
 [node name="buttonanimation" parent="VBoxContainer/VBoxContainer/start" instance=ExtResource("2_lxety")]
-from_center = false
-hover_scale = Vector2(1.2, 1.1)
 time = 0.2
 transition_type = 5
 
 [node name="credit" type="Button" parent="VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxLine_bxpou")
 theme_override_styles/hover = SubResource("StyleBoxLine_10shv")
 text = "Credits"
 alignment = 0
 
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/VBoxContainer/credit"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.129412, 0.27451, 1)
+
 [node name="buttonanimation" parent="VBoxContainer/VBoxContainer/credit" instance=ExtResource("2_lxety")]
-from_center = false
-hover_scale = Vector2(1.2, 1.1)
 time = 0.2
 transition_type = 5
 
