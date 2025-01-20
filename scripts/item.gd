@@ -15,13 +15,16 @@ var selected = false
 var grid_anchor = null
 var resource:ItemResource
 
+
 func _process(delta):
 	if selected:
 		global_position = lerp(global_position, get_global_mouse_position(), 25*delta)
 
 func load_item(new_resource: ItemResource):
 	resource = new_resource
-	image.texture = resource.image
+	print(new_resource)
+	image.texture = new_resource.image
+	print("resource given")
 	image.custom_minimum_size = Vector2(45*image.texture.get_width()/500, 45*image.texture.get_height()/500)
 	var grids = []
 	for poin in new_resource.grids.split('/'):
@@ -48,11 +51,11 @@ func rotate_item():
 func snap_to(dest: Vector2):
 	var tween = get_tree().create_tween()
 	if int(rotation_degrees) % 180==0:
-		dest += image.size/2
+		dest += image.size/2.0
 	else:
 		var temp_xy_switch = Vector2(image.size.y,image.size.x)
-		dest+=temp_xy_switch/2
-	tween.set_trans(Tween.TRANS_SINE)
+		dest+=temp_xy_switch/2.0
+	tween.set_trans(Tween.TRANS_LINEAR)
 	tween.tween_property(self, "global_position", dest, 0.15)
 	selected = false
 

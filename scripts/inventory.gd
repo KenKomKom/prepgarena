@@ -17,6 +17,7 @@ var icon_anchor
 
 func _ready():
 	GlobalEvent.connect("tab_pressed", _openclose)
+	GlobalEvent.connect("give_item", _give_item)
 	for i in range(25):
 		_create_slot(0)
 	for i in range(16):
@@ -24,13 +25,37 @@ func _ready():
 
 func _openclose():
 	visible = not visible
+	item_held = null
+	current_slot = null
+
+func _give_item(items):
+	visible = true
+	for item in items:
+		for i in range(len(pickable_array)):
+			icon_anchor = Vector2(1000,1000)
+			var new_item = item_preload.instantiate()
+			add_child(new_item)
+			new_item.load_item(load("res://resources/healing_potion.tres"))
+			await get_tree().create_timer(0.01).timeout
+			item_held = new_item
+			item_held.selected = true
+			var can = check_slot_available(pickable_array[i], 1)
+			set_grid_color(pickable_array[i],1)
+			if can:
+				print(i)
+				place_item(pickable_array[i])
+				break
+			else:
+				new_item.queue_free()
+			clear_grid()
+	item_held = null
 
 func _process(delta):
 	if item_held:
 		if Input.is_action_just_pressed("rmb"):
 			rotate_item()
 		if Input.is_action_just_pressed("lmb"):
-			place_item()
+			place_item(current_slot)
 		if Input.is_action_just_pressed("f"):
 			consume_item()
 	else:
@@ -65,7 +90,6 @@ func _on_slot_mouse_exited(slot, type):
 func _on_button_button_up():
 	var new_item = item_preload.instantiate()
 	add_child(new_item)
-	# TODO ganti ini ke resource tergantung yg user inginkan
 	new_item.load_item(load("res://resources/healing_potion.tres"))
 	new_item.selected = true
 	item_held = new_item
@@ -144,7 +168,7 @@ func rotate_item():
 	if current_slot:
 		_on_slot_mouse_entered(current_slot, current_slot.type)
 
-func place_item(current_slot = self.current_Slot):
+func place_item(current_slot):
 	if not can_place or not current_slot:
 		return
 	if current_slot.type==0:
@@ -152,6 +176,7 @@ func place_item(current_slot = self.current_Slot):
 		item_held.snap_to(grid_array[calc_grid_id].global_position)
 	elif current_slot.type==1:
 		var calc_grid_id = current_slot.ID + icon_anchor.x*col_count_pickable + icon_anchor.y
+		print(calc_grid_id, pickable_array[calc_grid_id].global_position, pickable_array[calc_grid_id])
 		item_held.snap_to(pickable_array[calc_grid_id].global_position)
 	item_held.grid_anchor = current_slot
 	for grid in item_held.item_grids:
