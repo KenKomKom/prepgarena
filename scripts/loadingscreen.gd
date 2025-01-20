@@ -14,4 +14,5 @@ func _process(delta):
 	var progres = p[0]*100
 	%ProgressBar.value = progres
 	if progres==100:
+		await get_tree().create_timer(1).timeout
 		get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get(next_level))
