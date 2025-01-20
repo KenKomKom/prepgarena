@@ -1,11 +1,9 @@
-extends Node2D
+extends CanvasLayer
 
+func _on_start_button_up():
+	# TODO JANGAN LUPA GANTI VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+	GameManager.next_level = "res://scenes/abstract_level.tscn"
+	get_tree().change_scene_to_file("res://scenes/loadingscreen.tscn")
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _on_credit_button_up():
 	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

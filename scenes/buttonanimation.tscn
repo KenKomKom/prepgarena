@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvu8pvos8au61"]
+
+[ext_resource type="Script" path="res://scripts/buttonanimation.gd" id="1_1p8kk"]
+
+[node name="buttonanimation" type="Node"]
+script = ExtResource("1_1p8kk")
