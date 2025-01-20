@@ -7,6 +7,6 @@ script = ExtResource("1_ns3x1")
 
 [node name="background" type="AudioStreamPlayer" parent="."]
 
-[node name="audio1" type="AudioStreamPlayer2D" parent="."]
+[node name="audio1" type="AudioStreamPlayer" parent="."]
 
-[node name="audio2" type="AudioStreamPlayer2D" parent="."]
+[node name="audio2" type="AudioStreamPlayer" parent="."]
